@@ -1,9 +1,22 @@
 ﻿#include <iostream>
-#include <fstream>  // Dodajemo knjižnico za datoteke
+#include <fstream>
+#include <sstream>
+
 using namespace std;
 
-// Globalni objekt za izhodno datoteko
 ofstream out;
+
+string inputText(const string& pot) {
+    ifstream input(pot);
+    stringstream sstream;
+
+    if (!input.is_open()) {
+        return string();
+    }
+
+    sstream << input.rdbuf();
+    return sstream.str();
+}
 
 int main(int argc, const char* const argv[]) {
     if (argc != 4) {
