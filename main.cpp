@@ -50,6 +50,33 @@ string inputText(const string& pot) {
     return sstream.str();
 }
 
+string predobdelava(const string& vhod) {
+    string obdelan;
+    for (int i = 0; i < vhod.size(); ) {
+        if (i + 1 >= vhod.size()) {
+            obdelan += vhod[i];
+            obdelan += '\x03';  // ASCII EOF
+            break;
+        }
+
+        char prvi = vhod[i];
+        char drugi = vhod[i + 1];
+
+        if (prvi == drugi) {
+            obdelan += prvi;
+            obdelan += '\x00';  
+            i += 1;  
+        }
+        else {
+            obdelan += prvi;
+            obdelan += drugi;
+            i += 2;
+        }
+    }
+    return obdelan;
+}
+
+
 int main(int argc, const char* const argv[]) {
     if (argc != 4) {
         cerr << "Uporaba: " << argv[0] << " <e|d> <ključ> <datoteka>" << endl;
