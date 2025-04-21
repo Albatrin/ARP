@@ -1,11 +1,43 @@
 ﻿#include <iostream>
 #include <fstream>
 #include <sstream>
-
+#include <vector>
+#include <algorithm>
 using namespace std;
 
 ofstream out;
 
+char M[16][16];
+
+void pripravaMatrike(string kljuc) {
+    vector<unsigned char> ASC(256);
+    for (int i = 0; i < 256; ++i) {
+        ASC[i] = (unsigned char)i;
+    }
+    
+    string unikaten;
+    for (char c : kljuc) {
+        if (unikaten.find(c) == string::npos) {
+            unikaten += c;
+        }
+    }
+
+    for (int i = 0; i < unikaten.length(); ++i) {
+        unsigned char znak = unikaten[i];
+        swap(ASC[znak], ASC[i]);
+    }
+
+    sort(ASC.begin() + unikaten.length(), ASC.end());
+
+
+
+    for (int i = 0; i < 16; ++i) {
+        for (int j = 0; j < 16; ++j) {
+            M[i][j] = ASC[i * 16 + j];
+        }
+    }
+
+}
 string inputText(const string& pot) {
     ifstream input(pot);
     stringstream sstream;
